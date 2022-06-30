@@ -1,0 +1,16 @@
+{
+  "env": {
+    "es6": true
+  },
+  "extends": ["google", "prettier", "plugin:node/recommended"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "prettier/prettier": "warn",
+    "no-console": "off"
+  }
+}
+
+
