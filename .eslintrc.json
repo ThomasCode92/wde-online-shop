@@ -9,8 +9,8 @@
   },
   "rules": {
     "prettier/prettier": "warn",
-    "no-console": "off"
+    "no-console": "off",
+    "require-jsdoc": "off",
+    "new-cap": ["error", { "capIsNewExceptions": ["Router"] }]
   }
 }
-
-
