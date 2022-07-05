@@ -15,7 +15,7 @@ app.use(express.static('public'));
 
 app.use('/auth', authRoutes);
 
-db.getConnection()
+db.connectToDatabase()
   .then(function () {
     app.listen(3000, function () {
       console.log('Server connected to database!');
