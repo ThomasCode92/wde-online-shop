@@ -19,6 +19,9 @@
           type="password" id="password" name="password"
           required minlength="6" />
       </p>
+      <input
+        type="hidden" name="_csrf"
+        value="<%= locals.csrfToken %>" />
       <button class="btn">Login</button>
       <p id="switch-form"><a href="/auth/signup">Create a new user</a></p>
     </form>

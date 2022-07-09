@@ -1,6 +1,9 @@
 const path = require('path');
 
 const express = require('express');
+const csurf = require('csurf');
+
+const addCsrfToken = require('./middleware/csrf-token');
 
 const db = require('./data/database');
 
@@ -13,6 +16,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
+
+app.use(csurf());
+app.use(addCsrfToken);
 
 app.use('/auth', authRoutes);
 

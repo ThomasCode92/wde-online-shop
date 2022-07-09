@@ -50,6 +50,9 @@
           type="text" id="city" name="city"
           required />
       </p>
+      <input
+        type="hidden" name="_csrf"
+        value="<%= locals.csrfToken %>" />
       <button class="btn">Create Account</button>
       <p id="switch-form"><a href="/auth/login">Login instead</a></p>
     </form>
