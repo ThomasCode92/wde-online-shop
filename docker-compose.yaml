@@ -25,6 +25,15 @@ services:
     volumes:
       - mysql-data-wde:/var/lib/mysql
     container_name: database
+  npm:
+    image: thomascode92/docker-util:mynpm
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/app
+    profiles:
+      - tools
+    container_name: mynpm
 
 volumes:
   mysql-data-wde:
