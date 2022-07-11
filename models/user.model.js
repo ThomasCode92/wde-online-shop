@@ -14,6 +14,20 @@ class User {
     };
   }
 
+  static async getUser(email) {
+    const [results] = await db.getDb().query(
+      `SELECT * FROM users
+      WHERE email = ?`,
+      [email]
+    );
+
+    return results[0];
+  }
+
+  static hasMatchingPassword(password, hashedPassword) {
+    return bcrypt.compare(password, hashedPassword);
+  }
+
   async signup() {
     const hashedPassword = await bcrypt.hash(this.password, 12);
 
