@@ -1,4 +1,7 @@
-const { createUserSession } = require('../util/authentication');
+const {
+  createUserSession,
+  destroyUserAuthSession,
+} = require('../util/authentication');
 
 const User = require('../models/user.model');
 
@@ -43,9 +46,15 @@ async function login(req, res) {
   });
 }
 
+function logout(req, res, next) {
+  destroyUserAuthSession(req);
+  res.redirect('/');
+}
+
 module.exports = {
   getSignup,
   getLogin,
   signup,
   login,
+  logout,
 };
