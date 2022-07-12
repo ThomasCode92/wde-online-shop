@@ -9,12 +9,16 @@ function getSignup(req, res) {
   res.render('customer/auth/signup');
 }
 
-async function signup(req, res) {
+async function signup(req, res, next) {
   const { email, confirmEmail, password, fullname, street, postal, city } =
     req.body;
 
-  const user = new User(email, password, fullname, street, postal, city);
-  await user.signup();
+  try {
+    const user = new User(email, password, fullname, street, postal, city);
+    await user.signup();
+  } catch (error) {
+    return next(error);
+  }
 
   res.redirect('/auth/login');
 }
@@ -23,10 +27,16 @@ function getLogin(req, res) {
   res.render('customer/auth/login');
 }
 
-async function login(req, res) {
+async function login(req, res, next) {
   const { email, password } = req.body;
 
-  const user = await User.getUser(email);
+  let user;
+
+  try {
+    user = await User.getUser(email);
+  } catch (error) {
+    return next(error);
+  }
 
   if (!user) {
     return res.redirect('/auth/login');
