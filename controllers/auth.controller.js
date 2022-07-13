@@ -8,7 +8,9 @@ const { getSessionData, flashDataToSession } = require('../util/session-flash');
 const User = require('../models/user.model');
 
 function getSignup(req, res) {
-  res.render('customer/auth/signup');
+  const sessionData = getSessionData(req);
+
+  res.render('customer/auth/signup', { inputData: sessionData });
 }
 
 async function signup(req, res, next) {
@@ -27,7 +29,7 @@ async function signup(req, res, next) {
 
   if (
     !userDetailsAreValid(email, password, fullname, street, postal, city) ||
-    !emailIsConfirmed(password, confirmedEmail)
+    !emailIsConfirmed(email, confirmedEmail)
   ) {
     return flashDataToSession(
       req,
@@ -67,7 +69,9 @@ async function signup(req, res, next) {
 }
 
 function getLogin(req, res) {
-  res.render('customer/auth/login');
+  const sessionData = getSessionData(req);
+
+  res.render('customer/auth/login', { inputData: sessionData });
 }
 
 async function login(req, res, next) {
