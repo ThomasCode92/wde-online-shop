@@ -14,23 +14,20 @@ async function signup(req, res, next) {
   const { email, password, fullname, street, postal, city } = req.body;
   const confirmedEmail = req.body['confirm-email'];
 
-  let existingUser;
-
-  try {
-    existingUser = await User.getUser(email);
-  } catch (error) {
-    return next(error);
-  }
-
   if (
     !userDetailsAreValid(email, password, fullname, street, postal, city) ||
-    !emailIsConfirmed(password, confirmedEmail) ||
-    existingUser
+    !emailIsConfirmed(password, confirmedEmail)
   ) {
     return res.redirect('/auth/signup');
   }
 
   try {
+    const existingUser = await User.getUser(email);
+
+    if (existingUser) {
+      return res.redirect('/auth/signup');
+    }
+
     const user = new User(email, password, fullname, street, postal, city);
     await user.signup();
   } catch (error) {
