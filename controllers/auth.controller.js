@@ -2,6 +2,7 @@ const {
   createUserSession,
   destroyUserAuthSession,
 } = require('../util/authentication');
+const { userDetailsAreValid, emailIsConfirmed } = require('../util/validation');
 
 const User = require('../models/user.model');
 
@@ -10,8 +11,24 @@ function getSignup(req, res) {
 }
 
 async function signup(req, res, next) {
-  const { email, confirmEmail, password, fullname, street, postal, city } =
-    req.body;
+  const { email, password, fullname, street, postal, city } = req.body;
+  const confirmedEmail = req.body['confirm-email'];
+
+  let existingUser;
+
+  try {
+    existingUser = await User.getUser(email);
+  } catch (error) {
+    return next(error);
+  }
+
+  if (
+    !userDetailsAreValid(email, password, fullname, street, postal, city) ||
+    !emailIsConfirmed(password, confirmedEmail) ||
+    existingUser
+  ) {
+    return res.redirect('/auth/signup');
+  }
 
   try {
     const user = new User(email, password, fullname, street, postal, city);
