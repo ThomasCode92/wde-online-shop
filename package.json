@@ -6,6 +6,9 @@
   "scripts": {
     "start": "nodemon --inspect=0.0.0.0:9229 app.js"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "keywords": [],
   "author": "ThomasCode92",
   "license": "ISC",
