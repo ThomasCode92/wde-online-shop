@@ -38,9 +38,9 @@ class User {
     );
 
     await db.getDb().query(
-      `INSERT INTO users (email, password, full_name, address_id)
-      VALUES (?, ?, ?, ?);`,
-      [this.email, hashedPassword, this.fullname, result.insertId]
+      `INSERT INTO users (email, password, full_name, address_id, is_admin)
+      VALUES (?, ?, ?, ?, ?);`,
+      [this.email, hashedPassword, this.fullname, result.insertId, false]
     );
   }
 }
