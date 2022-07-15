@@ -13,6 +13,7 @@ const db = require('./data/database');
 
 const baseRoutes = require('./routes/base.routes');
 const authRoutes = require('./routes/auth.routes');
+const adminRoutes = require('./routes/admin.routes');
 const productsRoutes = require('./routes/products.routes');
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(checkAuth);
 
 app.use('/', baseRoutes);
 app.use('/auth', authRoutes);
+app.use('/admin', adminRoutes);
 app.use('/products', productsRoutes);
 app.use(errorHandler);
 
