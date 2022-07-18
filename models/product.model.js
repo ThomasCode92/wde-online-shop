@@ -9,6 +9,18 @@ class Product {
     this.image = productData.image;
   }
 
+  static async findAll() {
+    const [results] = await db.getDb().query(
+      `SELECT p.id AS id, title, summary, price, description, path AS imageUrl
+      FROM images AS i
+      INNER JOIN products AS p ON i.product_id = p.id;`
+    );
+
+    console.log(results);
+
+    return results;
+  }
+
   async save() {
     const [result] = await db.getDb().query(
       `INSERT INTO products (title, summary, price, description)
