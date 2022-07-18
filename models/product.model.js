@@ -16,8 +16,6 @@ class Product {
       INNER JOIN products AS p ON i.product_id = p.id;`
     );
 
-    console.log(results);
-
     return results;
   }
 
