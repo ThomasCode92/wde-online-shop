@@ -19,6 +19,28 @@ class Product {
     return results;
   }
 
+  static async findById(productId) {
+    const [results] = await db.getDb().query(
+      `SELECT p.id AS id, title, summary, price, description, path AS imageUrl
+      FROM images AS i
+      INNER JOIN products AS p ON i.product_id = p.id
+      AND p.id = ?;`,
+      [productId]
+    );
+
+    const product = results[0];
+
+    if (!product) {
+      const error = new Error('Could not found product with provided id.');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    product.price = parseFloat(product.price);
+
+    return product;
+  }
+
   async save() {
     const [result] = await db.getDb().query(
       `INSERT INTO products (title, summary, price, description)
