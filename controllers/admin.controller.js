@@ -17,8 +17,6 @@ async function createNewProduct(req, res, next) {
   const { title, summary, price, description } = req.body;
   const image = req.file;
 
-  console.log(req.file);
-
   const product = new Product({ title, summary, description, price, image });
 
   try {
@@ -35,14 +33,33 @@ async function getUpdateProduct(req, res, next) {
 
   try {
     const product = await Product.findById(productId);
-    console.log(product);
     res.render('admin/products/update-product', { product });
   } catch (error) {
     return next(error);
   }
 }
 
-function updateProduct(req, res, next) {}
+async function updateProduct(req, res, next) {
+  const productId = req.params.id;
+
+  const { title, summary, price, description } = req.body;
+  const image = req.file;
+
+  const updatedProductData = {
+    title,
+    summary,
+    description,
+    price,
+    image,
+  };
+
+  try {
+    await Product.findByIdAndUpdate(productId, updatedProductData);
+    res.redirect('/admin/products');
+  } catch (error) {
+    return next(error);
+  }
+}
 
 module.exports = {
   getProducts,
