@@ -11,7 +11,8 @@ router.get('/products/new', adminController.getNewProduct);
 router
   .route('/products/:id')
   .get(adminController.getUpdateProduct)
-  .post(imageUpload, adminController.updateProduct);
+  .post(imageUpload, adminController.updateProduct)
+  .delete(adminController.deleteProduct);
 
 router
   .route('/products')

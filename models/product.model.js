@@ -23,7 +23,9 @@ class Product {
 
   static async findById(productId) {
     const [results] = await db.getDb().query(
-      `SELECT p.id AS id, title, summary, price, description, path AS imageUrl
+      `SELECT
+        p.id AS id, title, summary, price, description,
+        path AS imageUrl, filename
       FROM products AS p
       LEFT JOIN images AS i ON p.id = i.product_id
       WHERE p.id = ?;`,
@@ -64,6 +66,20 @@ class Product {
     if (productData.image) {
       await this.#updateImageData(productId, productData.image);
     }
+  }
+
+  static async findByIdAndDelete(productId) {
+    const product = await this.findById(productId);
+
+    // Delete product in database
+    await db.getDb().query(
+      `DELETE FROM products
+      WHERE id = ?`,
+      [product.id]
+    );
+
+    // Delete image on cloudinary
+    await cloudinary.uploader.destroy(product.filename);
   }
 
   async save() {
