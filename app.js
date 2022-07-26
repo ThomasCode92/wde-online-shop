@@ -8,6 +8,7 @@ const createSessionConfig = require('./config/session');
 const addCsrfToken = require('./middleware/csrf-token');
 const errorHandler = require('./middleware/error-handler');
 const checkAuth = require('./middleware/check-auth');
+const protectRoutes = require('./middleware/protect-routes');
 
 const db = require('./data/database');
 
@@ -36,8 +37,10 @@ app.use(checkAuth);
 
 app.use('/', baseRoutes);
 app.use('/auth', authRoutes);
-app.use('/admin', adminRoutes);
 app.use('/products', productsRoutes);
+app.use(protectRoutes);
+app.use('/admin', adminRoutes);
+
 app.use(errorHandler);
 
 db.connectToDatabase()
