@@ -9,4 +9,15 @@ async function getAllProducts(req, res, next) {
   }
 }
 
-module.exports = { getAllProducts };
+async function getProductDetails(req, res, next) {
+  const productId = req.params.id;
+
+  try {
+    const product = await Product.findById(productId);
+    res.render('customer/products/product-details', { product });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getAllProducts, getProductDetails };
