@@ -17,6 +17,7 @@ const baseRoutes = require('./routes/base.routes');
 const authRoutes = require('./routes/auth.routes');
 const adminRoutes = require('./routes/admin.routes');
 const productsRoutes = require('./routes/products.routes');
+const cartRoutes = require('./routes/cart.routes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static('public')); // Serve static files (e.g. CSS files)
 app.use(express.urlencoded({ extended: false })); // Parse incoming request bodies
+app.use(express.json());
 
 app.use(expressSession(sessionConfig));
 
@@ -40,6 +42,7 @@ app.use(cart);
 app.use('/', baseRoutes);
 app.use('/auth', authRoutes);
 app.use('/products', productsRoutes);
+app.use('/cart', cartRoutes);
 app.use(protectRoutes);
 app.use('/admin', adminRoutes);
 
