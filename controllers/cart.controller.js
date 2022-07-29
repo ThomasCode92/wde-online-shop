@@ -29,7 +29,7 @@ function updateCartItem(req, res, next) {
   const { productId, quantity } = req.body;
   const { cart } = res.locals;
 
-  const updatedItemData = cart.updateItem(productId, quantity);
+  const updatedItemData = cart.updateItem(parseInt(productId), quantity);
 
   req.session.cart = cart;
 
