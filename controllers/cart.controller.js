@@ -25,4 +25,22 @@ async function addCartItem(req, res, next) {
   });
 }
 
-module.exports = { getCart, addCartItem };
+function updateCartItem(req, res, next) {
+  const { productId, quantity } = req.body;
+  const { cart } = res.locals;
+
+  const updatedItemData = cart.updateItem(productId, quantity);
+
+  req.session.cart = cart;
+
+  res.status(201).json({
+    message: 'Cart updated successfully!',
+    updatedCartData: {
+      newTotalQuantity: cart.totalQuantity,
+      newTotalPrice: cart.totalPrice,
+      updatedItemPrice: updatedItemData.updatedItemPrice,
+    },
+  });
+}
+
+module.exports = { getCart, addCartItem, updateCartItem };
