@@ -26,7 +26,7 @@
   margin-left: var(--space-2);
 }
 
-#card-total {
+#cart-total {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,10 +34,15 @@
   padding: var(--space-4);
 }
 
-#card-total p {
+#cart-total p {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--color-primary-500);
+}
+
+#cart-total #cart-total-fallback {
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 @media (min-width: 40rem) {
@@ -50,7 +55,7 @@
     width: auto;
   }
 
-  #card-total {
+  #cart-total {
     flex-direction: row;
     justify-content: space-between;
   }
