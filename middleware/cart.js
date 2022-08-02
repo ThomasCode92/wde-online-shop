@@ -18,4 +18,15 @@ function initializeCart(req, res, next) {
   next();
 }
 
-module.exports = initializeCart;
+async function updateCartPrices(req, res, next) {
+  const cart = res.locals.cart;
+
+  await cart.updatePrices();
+
+  // req.session.cart = cart;
+  next();
+}
+
+module.exports = updateCartPrices;
+
+module.exports = { initializeCart, updateCartPrices };

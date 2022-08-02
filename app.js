@@ -9,7 +9,7 @@ const addCsrfToken = require('./middleware/csrf-token');
 const errorHandler = require('./middleware/error-handler');
 const checkAuth = require('./middleware/check-auth');
 const protectRoutes = require('./middleware/protect-routes');
-const cart = require('./middleware/cart');
+const { initializeCart, updateCartPrices } = require('./middleware/cart');
 
 const db = require('./data/database');
 
@@ -38,7 +38,8 @@ app.use(csurf());
 app.use(addCsrfToken);
 
 app.use(checkAuth);
-app.use(cart);
+app.use(initializeCart);
+app.use(updateCartPrices);
 
 app.use('/', baseRoutes);
 app.use('/auth', authRoutes);
