@@ -1,4 +1,7 @@
+const createOrders = require('../util/orders');
+
 const Product = require('../models/product.model');
+const Order = require('../models/order.model');
 
 async function getProducts(req, res, next) {
   try {
@@ -72,6 +75,17 @@ async function deleteProduct(req, res, next) {
   }
 }
 
+async function getOrders(req, res, next) {
+  try {
+    const orders = await Order.findAll();
+    const orderDocuments = createOrders(orders);
+
+    res.render('admin/orders/admin-orders', { orders: orderDocuments });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getProducts,
   getNewProduct,
@@ -79,4 +93,5 @@ module.exports = {
   getUpdateProduct,
   updateProduct,
   deleteProduct,
+  getOrders,
 };

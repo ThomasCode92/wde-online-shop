@@ -1,12 +1,22 @@
+const createOrders = require('../util/orders');
+
 const Order = require('../models/order.model');
 
-function getOrders(req, res, next) {
-  res.render('customer/orders/all-orders');
+async function getOrders(req, res, next) {
+  const { userId } = res.locals;
+
+  try {
+    const orders = await Order.findAll(userId);
+    const orderDocuments = createOrders(orders);
+
+    res.render('customer/orders/all-orders', { orders: orderDocuments });
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function addOrder(req, res, next) {
-  const cart = res.locals.cart;
-  const userId = res.locals.userId;
+  const { cart, userId } = res.locals;
 
   try {
     const order = new Order(cart, userId);

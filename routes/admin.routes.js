@@ -19,4 +19,6 @@ router
   .get(adminController.getProducts)
   .post(imageUpload, adminController.createNewProduct);
 
+router.get('/orders', adminController.getOrders);
+
 module.exports = router;
