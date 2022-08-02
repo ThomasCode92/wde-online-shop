@@ -86,6 +86,18 @@ async function getOrders(req, res, next) {
   }
 }
 
+async function updateOrder(req, res, next) {
+  const orderId = req.params.id;
+  const newStatus = req.body.newStatus;
+
+  try {
+    await Order.changeStatus(orderId, newStatus);
+    res.status(201).json({ message: 'Order updated successfully!', newStatus });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getProducts,
   getNewProduct,
@@ -94,4 +106,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getOrders,
+  updateOrder,
 };

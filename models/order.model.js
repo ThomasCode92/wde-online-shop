@@ -36,6 +36,15 @@ class Order {
     }
   }
 
+  static async changeStatus(orderId, newStatus) {
+    await db.getDb().query(
+      `UPDATE orders
+      SET current_status = ?
+      WHERE id = ?;`,
+      [newStatus, orderId]
+    );
+  }
+
   async save() {
     const orderData = [
       this.productData.totalQuantity,
