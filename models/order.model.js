@@ -27,11 +27,13 @@ class Order {
     if (userId) {
       const [results] = await db
         .getDb()
-        .query(baseQuery + ' WHERE user_id = ?;', [userId]);
+        .query(baseQuery + ' WHERE user_id = ? ORDER BY date DESC;', [userId]);
 
       return results;
     } else {
-      const [results] = await db.getDb().query(baseQuery + ';');
+      const [results] = await db
+        .getDb()
+        .query(baseQuery + ' ORDER BY date DESC;');
       return results;
     }
   }

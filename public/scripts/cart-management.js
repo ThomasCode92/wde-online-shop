@@ -2,7 +2,7 @@ const BTN_SELECTOR = '#product-details button';
 const BADGE_SELECTOR = '.nav-items .badge';
 
 const addToCartBtnElement = document.querySelector(BTN_SELECTOR);
-const cartBadgeElement = document.querySelector(BADGE_SELECTOR);
+const cartBadgeElements = document.querySelectorAll(BADGE_SELECTOR);
 
 async function addToCart() {
   const productId = addToCartBtnElement.dataset.productid;
@@ -27,7 +27,9 @@ async function addToCart() {
   const responseData = await response.json();
   const newTotalQuantity = responseData.newTotalItems;
 
-  cartBadgeElement.textContent = newTotalQuantity;
+  for (const cartBadgeElement of cartBadgeElements) {
+    cartBadgeElement.textContent = newTotalQuantity;
+  }
 }
 
 addToCartBtnElement.addEventListener('click', addToCart);

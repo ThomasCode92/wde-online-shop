@@ -117,8 +117,8 @@ class Cart {
     this.totalPrice = 0;
 
     for (const item of this.items) {
-      this.totalQuantity = this.totalQuantity + item.quantity;
-      this.totalPrice = this.totalPrice + item.totalPrice;
+      this.totalQuantity = parseInt(this.totalQuantity + item.quantity);
+      this.totalPrice = parseFloat(this.totalPrice + item.totalPrice);
     }
   }
 }

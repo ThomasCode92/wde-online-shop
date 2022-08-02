@@ -4,7 +4,7 @@ const BADGE_SELECTOR = '.nav-items .badge';
 
 const cartItemUpdateFormElements = document.querySelectorAll(FORM_SELECTOR);
 const cartTotalPriceElement = document.getElementById(TOTAL_PRICE_SELECTOR);
-const cartBadge = document.querySelector(BADGE_SELECTOR);
+const cartBadgeElements = document.querySelectorAll(BADGE_SELECTOR);
 
 async function updateCartItem(event) {
   event.preventDefault();
@@ -51,7 +51,10 @@ async function updateCartItem(event) {
   cartTotalPriceElement.textContent =
     '$' + responseData.updatedCartData.newTotalPrice.toFixed(2);
 
-  cartBadge.textContent = responseData.updatedCartData.newTotalQuantity;
+  for (const cartBadgeElement of cartBadgeElements) {
+    cartBadgeElement.textContent =
+      responseData.updatedCartData.newTotalQuantity;
+  }
 }
 
 for (const formElement of cartItemUpdateFormElements) {
